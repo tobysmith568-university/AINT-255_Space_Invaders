@@ -9,6 +9,7 @@ import core.game.Observation;
 import core.game.StateObservation;
 import core.player.AbstractPlayer;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import ontology.Types;
 import ontology.Types.ACTIONS;
 import tools.ElapsedCpuTimer;
@@ -47,15 +48,15 @@ public class MLPAgent extends AbstractPlayer {
 
         /**
          * *****************************
-         * EDIT: Please decide on MLP inputs representation
+         * DONE-EDIT: Please decide on MLP inputs representation
          */
-        buildScaleInputs(stateObs);
-        //buildOneToNInputs(stateObs);
+        //buildScaleInputs(stateObs);
+        buildOneToNInputs(stateObs);
 
         // get the output fron the MLP
-        outputs = mlpController.getMlp().propagate(MLPScaledInputs);
+        //outputs = mlpController.getMlp().propagate(MLPScaledInputs);
 
-        //  outputs = mlpController.getMlp().propagate(MLPInputsOnetoN);
+        outputs = mlpController.getMlp().propagate(MLPOnetoNInputs);
         //*****************************
         // work out what is the action ID from the MLP
         actionID = convertOutputToActionID(outputs);
@@ -64,8 +65,8 @@ public class MLPAgent extends AbstractPlayer {
         action = actionIDToAction(actionID);
 
         // debugging 
-        //   printGrid(stateObs);
-        //   printOneToNInputs();
+        //(stateObs);
+        printOneToNInputs();
         //   printScaledInputs(); 
         //------------------------------
         // if the agent has fired a missile, 
@@ -80,15 +81,42 @@ public class MLPAgent extends AbstractPlayer {
 
     private int convertOutputToActionID(double[] outputs) {
 
-        int index;
-
-        index = 0;
+        int index = 0;
+        double highestValue = outputs[0];
+        
+        //////////////////////////////////////////////////////////////////////// PRINT THE OUTPUTS FROM THE MLP
+        System.out.print("[");
+        for (double output : outputs) {
+            System.out.print(output + ", ");
+        }
+        System.out.println("]");
 
         /**
          * *****************************
          * EDIT: Please decide an ID number from the output of the MLP and
          * return that number
          */
+        
+        /*
+            ActionIDs in the following order: Shoot, Left, Right, Nothing
+        
+            The following code will find the highest index from the array
+            of outputs.
+        
+            If the highest values are equal the priority order is
+                    Nothing
+                    Right
+                    Left
+                    Shoot
+        
+        */
+        for (int i = 1; i < outputs.length; i++) {
+            if (outputs[i] >= highestValue){
+                index = i;
+                highestValue = outputs[i];
+            }
+        }
+        
         return index;
     }
 
@@ -96,12 +124,12 @@ public class MLPAgent extends AbstractPlayer {
 
         /**
          * *****************************
-         * EDIT: Please define the dimensions of the viewport
+         * Done-EDIT: Please define the dimensions of the viewport
          */
         viewWidth = 2;
         viewHeight = 2;
         // cell options = empty, boundary, alien, missile, left window, right window
-        numberCategories = 1;
+        numberCategories = 5;
         //*****************************
 
         int blockSize;
@@ -143,9 +171,11 @@ public class MLPAgent extends AbstractPlayer {
 
                         switch (o.itype) {
                             case 3:        // obstacle sprite
+                                MLPOnetoNInputs[index] = 4;
                                 break;
 
                             case 1:        // user ship
+                                MLPOnetoNInputs[index] = 3;
                                 break;
 
                             case 9:        // alien sprite
@@ -153,6 +183,7 @@ public class MLPAgent extends AbstractPlayer {
                                 break;
 
                             case 6:            // missile
+                                MLPOnetoNInputs[index] = 2;
                                 break;
                         }
                     }
@@ -166,7 +197,7 @@ public class MLPAgent extends AbstractPlayer {
 
         /**
          * *****************************
-         * EDIT: Please define the dimensions of the viewport
+         * DONE-EDIT: Please define the dimensions of the viewport
          */
         viewWidth = 2;
         viewHeight = 2;
@@ -235,7 +266,7 @@ public class MLPAgent extends AbstractPlayer {
 
         switch (actionID) {
             case 0:
-                action = ACTIONS.ACTION_NIL;
+                action = ACTIONS.ACTION_USE;
                 break;
             case 1:
                 action = ACTIONS.ACTION_LEFT;
@@ -244,8 +275,7 @@ public class MLPAgent extends AbstractPlayer {
                 action = ACTIONS.ACTION_RIGHT;
                 break;
             case 3:
-                // this is the fire action
-                action = ACTIONS.ACTION_USE;
+                action = ACTIONS.ACTION_NIL;
                 break;
         }
         return action;
