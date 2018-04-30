@@ -73,11 +73,21 @@ public class GameScore {
 
         /**
          * *****************************
-         * EDIT: Please define a means to define a game score
+         * DONE-EDIT: Please define a means to define a game score
          */
-        // assume the overall score 
-        // is just the score of a game
+        
+        //Find the games score
+        //  Assuming 3 points are given for hitting an alien
         overallScore = score;
+        
+        //Duduct a point for every missile fired
+        //  This results in every alien hit only giving 2 points
+        //  And missing deducts a point
+        overallScore -= numMissiles;
+        
+        //Significantly increase the score if the game was won
+        overallScore *= winner == 1 ? 10 : 1;
+        
         return overallScore;
     }
 

@@ -50,13 +50,14 @@ public class MLPAgent extends AbstractPlayer {
          * *****************************
          * DONE-EDIT: Please decide on MLP inputs representation
          */
+        
         //buildScaleInputs(stateObs);
         buildOneToNInputs(stateObs);
 
         // get the output fron the MLP
         //outputs = mlpController.getMlp().propagate(MLPScaledInputs);
-
         outputs = mlpController.getMlp().propagate(MLPOnetoNInputs);
+        
         //*****************************
         // work out what is the action ID from the MLP
         actionID = convertOutputToActionID(outputs);
@@ -82,10 +83,9 @@ public class MLPAgent extends AbstractPlayer {
     private int convertOutputToActionID(double[] outputs) {
 
         int index = 0;
-        double highestValue = outputs[0];
         
         //////////////////////////////////////////////////////////////////////// PRINT THE OUTPUTS FROM THE MLP
-        System.out.print("[");
+        System.out.print("Outputs - [");
         for (double output : outputs) {
             System.out.print(output + ", ");
         }
@@ -93,7 +93,7 @@ public class MLPAgent extends AbstractPlayer {
 
         /**
          * *****************************
-         * EDIT: Please decide an ID number from the output of the MLP and
+         * DONE-EDIT: Please decide an ID number from the output of the MLP and
          * return that number
          */
         
@@ -103,13 +103,14 @@ public class MLPAgent extends AbstractPlayer {
             The following code will find the highest index from the array
             of outputs.
         
-            If the highest values are equal the priority order is
+            If the highest values are equal the priority order is:
                     Nothing
                     Right
                     Left
                     Shoot
         
         */
+        double highestValue = outputs[index];
         for (int i = 1; i < outputs.length; i++) {
             if (outputs[i] >= highestValue){
                 index = i;
@@ -124,7 +125,7 @@ public class MLPAgent extends AbstractPlayer {
 
         /**
          * *****************************
-         * Done-EDIT: Please define the dimensions of the viewport
+         * DONE-EDIT: Please define the dimensions of the viewport
          */
         viewWidth = 2;
         viewHeight = 2;
@@ -165,7 +166,7 @@ public class MLPAgent extends AbstractPlayer {
                 } else if (j >= numGridCols) {
                     //   right outside game window
                 } else if (gameGrid[j][i].isEmpty()) {
-                    //  MLPInputsOnetoN[index] = 0;
+                      MLPOnetoNInputs[index] = 0;
                 } else {
                     for (Observation o : gameGrid[j][i]) {
 
