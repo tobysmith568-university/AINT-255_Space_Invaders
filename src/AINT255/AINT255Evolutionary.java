@@ -59,23 +59,23 @@ public class AINT255Evolutionary implements Runnable {
 
         /**
          * *****************************
-         * EDIT: Please set MLP topology
+         * DONE-EDIT: Please set MLP topology
          */
-        numberInputNodes = 4;
-        numberHiddenNodes = 1;
+        numberInputNodes = 10 * 4 * 9;
+        numberHiddenNodes = 20;
         numberOutputNodes = 4;
         //*****************************
 
         /**
          * *****************************
-         * EDIT: Please define evolution parameters
+         * DONE-EDIT: Please define evolution parameters
          */
-        populationSize = 5;
-        numberGenerations = 5;
-        numberElite = 2;
+        populationSize = 100;
+        numberGenerations = 10;
+        numberElite = 20;
 
-        mutationMagnitude = 2;
-        mutationProbability = 1;
+        mutationMagnitude = 3;
+        mutationProbability = .035;
 
         //*****************************
         population = new AINT255MLPController[populationSize];
