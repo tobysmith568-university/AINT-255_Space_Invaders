@@ -70,9 +70,9 @@ public class AINT255Evolutionary implements Runnable {
          * *****************************
          * DONE-EDIT: Please define evolution parameters
          */
-        populationSize = 100;
-        numberGenerations = 10;
-        numberElite = 20;
+        populationSize = 25;
+        numberGenerations = 100;
+        numberElite = 5;
 
         mutationMagnitude = 3;
         mutationProbability = .035;
@@ -101,7 +101,7 @@ public class AINT255Evolutionary implements Runnable {
 
         createPopulation();
 
-        evaluatePopulation();
+        evaluatePopulation(genCounter);
 
         genCounter = 1;
         lastBestFitness = 0;
@@ -114,7 +114,7 @@ public class AINT255Evolutionary implements Runnable {
 
             selectIndivuals();
 
-            evaluatePopulation();
+            evaluatePopulation(genCounter);
 
             System.out.printf("Gen %d fitness of best individual so far %.4f\n", genCounter, lastBestFitness);
 
@@ -140,13 +140,13 @@ public class AINT255Evolutionary implements Runnable {
         }
     }
 
-    private void evaluatePopulation() {
+    private void evaluatePopulation(int gen) {
 
         int seed;
         String level;
 
         for (int i = 0; i < populationSize; i++) {
-            evaluateIndividual(i);
+            evaluateIndividual(i, gen);
         }
 
         sortPopulationByFitness();
@@ -156,7 +156,7 @@ public class AINT255Evolutionary implements Runnable {
 //        AINT255ArcadeMachine.runOneGameAINT255(gameName, level, true, sampleMLPController, null, seed, 0, population[0]);
     }
 
-    private void evaluateIndividual(int index) {
+    private void evaluateIndividual(int index, int gen) {
         double[] score;
         boolean visuals;
         int seed;
@@ -181,7 +181,7 @@ public class AINT255Evolutionary implements Runnable {
         population[index].addGameScore(score);
         System.out.println("win = 1, loose = 0 " + score[0] + ", score[1] " + score[1] + " timesteps " + score[2]);
 
-        System.out.println("done individual " + index);
+        System.out.println("Done Individual: " + index + " - Gen: " + gen);
 
     }
 

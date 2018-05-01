@@ -75,10 +75,11 @@ public class GameScore {
          * *****************************
          * DONE-EDIT: Please define a means to define a game score
          */
-        // assume the overall score 
-        // is just the score of a game
-        overallScore = score - (numMissiles / 10) - (timeSteps / 50);
+        
+        overallScore = score - (numMissiles / 5) - (timeSteps / 50);
         return overallScore;
+
+          
     }
 
     public double getWinner() {
