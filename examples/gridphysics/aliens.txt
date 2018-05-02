@@ -29,7 +29,7 @@ BasicGame square_size=32
         missile EOS  > killSprite
 
         base bomb > killBoth
-        base sam > killBoth scoreChange=1
+        base sam > killBoth scoreChange=100
 
         base   alien > killSprite
         avatar alien > killSprite scoreChange=-1

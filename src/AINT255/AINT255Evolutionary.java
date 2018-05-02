@@ -61,15 +61,18 @@ public class AINT255Evolutionary implements Runnable {
          * *****************************
          * DONE-EDIT: Please set MLP topology
          */
+        
         numberInputNodes = 10 * 9 * 3;
         numberHiddenNodes = 20;
         numberOutputNodes = 4;
+        
         //*****************************
 
         /**
          * *****************************
          * DONE-EDIT: Please define evolution parameters
          */
+        
         populationSize = 100;
         numberGenerations = 50;
         numberElite = 10;

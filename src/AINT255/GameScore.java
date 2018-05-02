@@ -83,17 +83,8 @@ public class GameScore {
         int numBlocksShot = (int) score / 100;
         int numAliensShot = (int) score % 100;
         
-        
-        
-        
-        
-        
-        
-        
-        overallScore = score - (numMissiles / 5) - (timeSteps / 50);
+        overallScore = (numAliensShot * 2) - (numBlocksShot / 2) - (numMissiles / 2) - (timeSteps / 50);
         return overallScore;
-
-          
     }
 
     public double getWinner() {

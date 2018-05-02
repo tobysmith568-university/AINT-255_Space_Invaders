@@ -83,7 +83,7 @@ public class MLPAgent extends AbstractPlayer {
         System.out.println("[" + outputs[0]
                         + ", " + outputs[1]
                         + ", " + outputs[2]
-                        + ", " + outputs[2] + "]");
+                        + ", " + outputs[3] + "]");
 
         int index;
 
