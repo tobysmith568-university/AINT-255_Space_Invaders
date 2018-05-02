@@ -115,7 +115,7 @@ public class MLPAgent extends AbstractPlayer {
         viewWidth = 10;
         viewHeight = 9;
         // cell options = empty, boundary, alien, missile, left window, right window
-        numberCategories = 4;
+        numberCategories = 3;
         //*****************************
 
         int blockSize;
@@ -151,24 +151,24 @@ public class MLPAgent extends AbstractPlayer {
                 } else if (j >= numGridCols) {
                     //   right outside game window
                 } else if (gameGrid[j][i].isEmpty()) {
-                    MLPOnetoNInputs[index] = 1;
+                    //MLPOnetoNInputs[index] = 1;
                 } else {
                     for (Observation o : gameGrid[j][i]) {
 
                         switch (o.itype) {
                             case 3:        // obstacle sprite
-                                MLPOnetoNInputs[index + 1] = 1;
+                                MLPOnetoNInputs[index + 0] = 1;
                                 break;
 
                             case 1:        // user ship
                                 break;
 
                             case 9:        // alien sprite
-                                MLPOnetoNInputs[index + 2] = 1;
+                                MLPOnetoNInputs[index + 1] = 1;
                                 break;
 
                             case 6:            // missile
-                                MLPOnetoNInputs[index + 3] = 1;
+                                MLPOnetoNInputs[index + 2] = 1;
                                 break;
                         }
                     }

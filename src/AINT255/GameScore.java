@@ -76,6 +76,20 @@ public class GameScore {
          * DONE-EDIT: Please define a means to define a game score
          */
         
+        //If:
+        //  100 points is given per block shot
+        //  1 point is given per alien shot
+        
+        int numBlocksShot = (int) score / 100;
+        int numAliensShot = (int) score % 100;
+        
+        
+        
+        
+        
+        
+        
+        
         overallScore = score - (numMissiles / 5) - (timeSteps / 50);
         return overallScore;
 
