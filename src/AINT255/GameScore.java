@@ -70,7 +70,6 @@ public class GameScore {
     }
 
     public double getOverallScore() {
-
         /**
          * *****************************
          * DONE-EDIT: Please define a means to define a game score

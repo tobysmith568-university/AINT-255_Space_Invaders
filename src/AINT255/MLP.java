@@ -23,7 +23,7 @@ public class MLP {
     public final static int SIGMOID = 0;
     public final static int TANH = 1;
 
-    protected int activationFunctionType = TANH;
+    protected int activationFunctionType = SIGMOID;
 
     public MLP(int numberOfInputs, int numberOfHidden, int numberOfOutputs, Random random) {
         inputNodes = new double[numberOfInputs];
