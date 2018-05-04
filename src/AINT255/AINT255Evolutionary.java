@@ -78,7 +78,7 @@ public class AINT255Evolutionary implements Runnable {
         numberElite = 10;
 
         mutationMagnitude = 1;
-        mutationProbability = .25;
+        mutationProbability = 0.25;
 
         //*****************************
         population = new AINT255MLPController[populationSize];
@@ -173,18 +173,18 @@ public class AINT255Evolutionary implements Runnable {
         // reset game scores before starting a new game
         population[index].resetGameScores();
 
-        System.out.println("starting individual " + index);
+        //System.out.println("starting individual " + index);
 
         score = AINT255ArcadeMachine.runOneGameAINT255(gameName, level, visuals, sampleMLPController, null, seed, 0, population[index]);
         population[index].addGameScore(score);
-        System.out.println("win = 1, loose = 0 " + score[0] + ", score[1] " + score[1] + " timesteps " + score[2]);
+        System.out.println("Gen: " + gen + ", Individual: " + index + (score[0] == 1 ? ",  WON" : ", LOST") + ", Score: " + score[1] + ", Timesteps " + score[2]);
 
         level = "examples/gridphysics/aliens_lvl1.txt";
         score = AINT255ArcadeMachine.runOneGameAINT255(gameName, level, visuals, sampleMLPController, null, seed, 0, population[index]);
         population[index].addGameScore(score);
-        System.out.println("win = 1, loose = 0 " + score[0] + ", score[1] " + score[1] + " timesteps " + score[2]);
+        System.out.println("Gen: " + gen + ", Individual: " + index + (score[0] == 1 ? ",  WON" : ", LOST") + ", Score: " + score[1] + ", Timesteps " + score[2]);
 
-        System.out.println("Done Individual: " + index + " - Gen: " + gen);
+        //System.out.println("Done Individual: " + index + " - Gen: " + gen);
 
     }
 
