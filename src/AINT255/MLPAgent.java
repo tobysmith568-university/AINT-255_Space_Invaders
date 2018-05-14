@@ -80,14 +80,13 @@ public class MLPAgent extends AbstractPlayer {
 
     private int convertOutputToActionID(double[] outputs) {
         
-//        System.out.println("[" + outputs[0]
+//        System.out.print("[" + outputs[0]
 //                        + ", " + outputs[1]
-//                        + ", " + outputs[2]
-//                        + ", " + outputs[3] + "]");
+//                        + ", " + outputs[2] + "]");
 
-        int index;
+        int result;
 
-        index = 0;
+        result = 0;
 
         /**
          * *****************************
@@ -95,15 +94,17 @@ public class MLPAgent extends AbstractPlayer {
          * return that number
          */
         
-        double highest = outputs[index];
+        double highest = outputs[result];
         for (int i = 1; i < outputs.length; i++) {
+            if (outputs[i] > 0.7)
             if (outputs[i] > highest){
                 highest = outputs[i];
-                index = i;
+                result = i + 1;
             }
         }
         
-        return index;
+        //System.out.println(" - " + result);
+        return result;
     }
 
     private void buildOneToNInputs(StateObservation stateObs) {

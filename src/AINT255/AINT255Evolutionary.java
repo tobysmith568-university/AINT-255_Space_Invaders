@@ -64,7 +64,7 @@ public class AINT255Evolutionary implements Runnable {
         
         numberInputNodes = 10 * 9 * 3;
         numberHiddenNodes = 20;
-        numberOutputNodes = 4;
+        numberOutputNodes = 3;
         
         //*****************************
 
