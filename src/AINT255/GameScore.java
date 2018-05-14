@@ -82,7 +82,7 @@ public class GameScore {
         int numBlocksShot = (int) score / 100;
         int numAliensShot = (int) score % 100;
         
-        overallScore = numAliensShot * 2;
+        overallScore = timeSteps * 2;
         
         if (winner == 1){
             overallScore *= 3;
