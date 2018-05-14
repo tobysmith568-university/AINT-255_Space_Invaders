@@ -70,24 +70,24 @@ public class GameScore {
     }
 
     public double getOverallScore() {
-
         /**
          * *****************************
          * DONE-EDIT: Please define a means to define a game score
          */
         
-        //Find the games score
-        //  Assuming 3 points are given for hitting an alien
-        overallScore = score;
+        //If:
+        //  1 point is given per alien shot
+        int numBlocksShot = (int) score / 100;
+        int numAliensShot = (int) score % 100;
         
-        //Duduct a point for every missile fired
-        //  This results in every alien hit only giving 2 points
-        //  And missing deducts a point
-        overallScore -= numMissiles;
+        overallScore = numAliensShot * 2;
         
-        //Significantly increase the score if the game was won
-        overallScore *= winner == 1 ? 10 : 1;
+        if (winner == 1){
+            overallScore *= 3;
+        }
         
+        
+        //  100 points is given per block shot
         return overallScore;
     }
 

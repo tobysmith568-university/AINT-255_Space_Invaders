@@ -61,21 +61,24 @@ public class AINT255Evolutionary implements Runnable {
          * *****************************
          * DONE-EDIT: Please set MLP topology
          */
-        numberInputNodes = 20;
-        numberHiddenNodes = 8;
+        
+        numberInputNodes = 10 * 9 * 3;
+        numberHiddenNodes = 20;
         numberOutputNodes = 4;
+        
         //*****************************
 
         /**
          * *****************************
-         * EDIT: Please define evolution parameters
+         * DONE-EDIT: Please define evolution parameters
          */
-        populationSize = 5;
-        numberGenerations = 5;
-        numberElite = 2;
+        
+        populationSize = 100;
+        numberGenerations = 50;
+        numberElite = 10;
 
-        mutationMagnitude = 2;
-        mutationProbability = 1;
+        mutationMagnitude = 1;
+        mutationProbability = 0.25;
 
         //*****************************
         population = new AINT255MLPController[populationSize];
@@ -101,7 +104,7 @@ public class AINT255Evolutionary implements Runnable {
 
         createPopulation();
 
-        evaluatePopulation();
+        evaluatePopulation(genCounter);
 
         genCounter = 1;
         lastBestFitness = 0;
@@ -114,7 +117,7 @@ public class AINT255Evolutionary implements Runnable {
 
             selectIndivuals();
 
-            evaluatePopulation();
+            evaluatePopulation(genCounter);
 
             System.out.printf("Gen %d fitness of best individual so far %.4f\n", genCounter, lastBestFitness);
 
@@ -140,13 +143,13 @@ public class AINT255Evolutionary implements Runnable {
         }
     }
 
-    private void evaluatePopulation() {
+    private void evaluatePopulation(int gen) {
 
         int seed;
         String level;
 
         for (int i = 0; i < populationSize; i++) {
-            evaluateIndividual(i);
+            evaluateIndividual(i, gen);
         }
 
         sortPopulationByFitness();
@@ -156,7 +159,7 @@ public class AINT255Evolutionary implements Runnable {
 //        AINT255ArcadeMachine.runOneGameAINT255(gameName, level, true, sampleMLPController, null, seed, 0, population[0]);
     }
 
-    private void evaluateIndividual(int index) {
+    private void evaluateIndividual(int index, int gen) {
         double[] score;
         boolean visuals;
         int seed;
@@ -170,18 +173,18 @@ public class AINT255Evolutionary implements Runnable {
         // reset game scores before starting a new game
         population[index].resetGameScores();
 
-        System.out.println("starting individual " + index);
+        //System.out.println("starting individual " + index);
 
         score = AINT255ArcadeMachine.runOneGameAINT255(gameName, level, visuals, sampleMLPController, null, seed, 0, population[index]);
         population[index].addGameScore(score);
-        System.out.println("win = 1, loose = 0 " + score[0] + ", score[1] " + score[1] + " timesteps " + score[2]);
+        System.out.println("Gen: " + gen + ", Individual: " + index + (score[0] == 1 ? ",  WON" : ", LOST") + ", Score: " + score[1] + ", Timesteps " + score[2]);
 
         level = "examples/gridphysics/aliens_lvl1.txt";
         score = AINT255ArcadeMachine.runOneGameAINT255(gameName, level, visuals, sampleMLPController, null, seed, 0, population[index]);
         population[index].addGameScore(score);
-        System.out.println("win = 1, loose = 0 " + score[0] + ", score[1] " + score[1] + " timesteps " + score[2]);
+        System.out.println("Gen: " + gen + ", Individual: " + index + (score[0] == 1 ? ",  WON" : ", LOST") + ", Score: " + score[1] + ", Timesteps " + score[2]);
 
-        System.out.println("done individual " + index);
+        //System.out.println("Done Individual: " + index + " - Gen: " + gen);
 
     }
 

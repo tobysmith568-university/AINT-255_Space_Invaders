@@ -50,14 +50,13 @@ public class MLPAgent extends AbstractPlayer {
          * *****************************
          * DONE-EDIT: Please decide on MLP inputs representation
          */
-        
         //buildScaleInputs(stateObs);
         buildOneToNInputs(stateObs);
 
         // get the output fron the MLP
         //outputs = mlpController.getMlp().propagate(MLPScaledInputs);
+
         outputs = mlpController.getMlp().propagate(MLPOnetoNInputs);
-        
         //*****************************
         // work out what is the action ID from the MLP
         actionID = convertOutputToActionID(outputs);
@@ -81,6 +80,11 @@ public class MLPAgent extends AbstractPlayer {
     }
 
     private int convertOutputToActionID(double[] outputs) {
+        
+//        System.out.println("[" + outputs[0]
+//                        + ", " + outputs[1]
+//                        + ", " + outputs[2]
+//                        + ", " + outputs[3] + "]");
 
         int index = 0;
         
@@ -97,24 +101,11 @@ public class MLPAgent extends AbstractPlayer {
          * return that number
          */
         
-        /*
-            ActionIDs in the following order: Shoot, Left, Right, Nothing
-        
-            The following code will find the highest index from the array
-            of outputs.
-        
-            If the highest values are equal the priority order is:
-                    Nothing
-                    Right
-                    Left
-                    Shoot
-        
-        */
-        double highestValue = outputs[index];
+        double highest = outputs[index];
         for (int i = 1; i < outputs.length; i++) {
-            if (outputs[i] >= highestValue){
+            if (outputs[i] > highest){
+                highest = outputs[i];
                 index = i;
-                highestValue = outputs[i];
             }
         }
         
@@ -127,10 +118,10 @@ public class MLPAgent extends AbstractPlayer {
          * *****************************
          * DONE-EDIT: Please define the dimensions of the viewport
          */
-        viewWidth = 2;
-        viewHeight = 2;
+        viewWidth = 10;
+        viewHeight = 9;
         // cell options = empty, boundary, alien, missile, left window, right window
-        numberCategories = 5;
+        numberCategories = 3;
         //*****************************
 
         int blockSize;
@@ -166,13 +157,13 @@ public class MLPAgent extends AbstractPlayer {
                 } else if (j >= numGridCols) {
                     //   right outside game window
                 } else if (gameGrid[j][i].isEmpty()) {
-                      MLPOnetoNInputs[index] = 0;
+                    //MLPOnetoNInputs[index] = 1;
                 } else {
                     for (Observation o : gameGrid[j][i]) {
 
                         switch (o.itype) {
                             case 3:        // obstacle sprite
-                                MLPOnetoNInputs[index] = 4;
+                                MLPOnetoNInputs[index + 0] = 1;
                                 break;
 
                             case 1:        // user ship
@@ -180,11 +171,11 @@ public class MLPAgent extends AbstractPlayer {
                                 break;
 
                             case 9:        // alien sprite
-                                MLPOnetoNInputs[index] = 1;
+                                MLPOnetoNInputs[index + 1] = 1;
                                 break;
 
                             case 6:            // missile
-                                MLPOnetoNInputs[index] = 2;
+                                MLPOnetoNInputs[index + 2] = 1;
                                 break;
                         }
                     }
