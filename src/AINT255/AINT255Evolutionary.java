@@ -62,7 +62,7 @@ public class AINT255Evolutionary implements Runnable {
          * DONE-EDIT: Please set MLP topology
          */
         
-        numberInputNodes = 10 * 9 * 3;
+        numberInputNodes = 9 * 9 * 3;
         numberHiddenNodes = 20;
         numberOutputNodes = 4;
         

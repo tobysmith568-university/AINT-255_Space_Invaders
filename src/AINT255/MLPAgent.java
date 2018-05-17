@@ -118,7 +118,7 @@ public class MLPAgent extends AbstractPlayer {
          * *****************************
          * DONE-EDIT: Please define the dimensions of the viewport
          */
-        viewWidth = 10;
+        viewWidth = 9;
         viewHeight = 9;
         // cell options = empty, boundary, alien, missile, left window, right window
         numberCategories = 3;
